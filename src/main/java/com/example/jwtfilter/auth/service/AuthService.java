@@ -17,6 +17,7 @@ public class AuthService {
 
     private final JwtUtil jwtUtil; // 회원가입할 때 JWT 만들어줘야 하니까..!
     private final UserService userService;
+    // UserRepository 보다 UserService 를 사용해서 user 를 save 하거나 검증(get)하는 것이 좋은 패턴 ?!
 
     @Transactional
     public SignupResponse signup(SignupRequest request) {
