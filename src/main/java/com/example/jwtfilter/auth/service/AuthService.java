@@ -1,5 +1,7 @@
 package com.example.jwtfilter.auth.service;
 
+import com.example.jwtfilter.auth.dto.SigninRequest;
+import com.example.jwtfilter.auth.dto.SigninResponse;
 import com.example.jwtfilter.auth.dto.SignupRequest;
 import com.example.jwtfilter.auth.dto.SignupResponse;
 import com.example.jwtfilter.config.JwtUtil;
@@ -23,5 +25,13 @@ public class AuthService {
         // JWT 만들어줌~
         String bearerJwt = jwtUtil.createToken(saveResult.getId(), saveResult.getEmail());
         return new SignupResponse(bearerJwt);
+    }
+
+    @Transactional(readOnly = true)
+    public SigninResponse signin(SigninRequest request) {
+        UserResponse userResult = userService.findByEmail(request.getEmail());
+
+        String bearerJwt = jwtUtil.createToken(userResult.getId(), userResult.getEmail());
+        return new SigninResponse(bearerJwt);
     }
 }

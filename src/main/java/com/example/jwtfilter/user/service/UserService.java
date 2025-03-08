@@ -24,4 +24,12 @@ public class UserService {
         User savedUser = userRepository.save(user);
         return new UserResponse(savedUser.getId(), savedUser.getEmail());
     }
+
+    @Transactional(readOnly = true)
+    public UserResponse findByEmail(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new IllegalStateException("존재하지 않는 유저입니다.")
+        );
+        return new UserResponse(user.getId(), user.getEmail());
+    }
 }
